@@ -23,9 +23,14 @@ class AppService {
     };
   }
 
-  async createJobDelay({ job }) {
+  async createJobDelay({ job })  {
     const { HTTP_DELAY_IN_SECONDS = 2 } = process.env
     const { data } = await axios.get(`https://httpbin.org/delay/${HTTP_DELAY_IN_SECONDS}`);
+    return this.createJob({ job });
+  }
+
+  async createJobRandomDelay({ job })  {
+    const { data } = await axios.get("https://dummy-api.beta.stuart-apps.solutions/api/foo/bar");
     return this.createJob({ job });
   }
 

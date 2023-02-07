@@ -19,6 +19,13 @@ app.post('/v3/orders/http-delay', async (req, res) => {
   res.json(appService.jobToOrder(jobResponse))
 })
 
+app.post('/v3/orders/http-random-delay', async (req, res) => {
+  const order = req.body
+  const job = appService.orderToJob(order);
+  const jobResponse = await appService.createJobRandomDelay(job);
+  res.json(appService.jobToOrder(jobResponse))
+})
+
 app.post('/v3/orders', async (req, res) => {
   const order = req.body
   const job = appService.orderToJob(order);
