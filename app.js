@@ -8,7 +8,7 @@ app.use(express.json());
 
 const appService = new AppService()
 
-app.get('/health', (req, res) => {
+app.get('/v3/health', (req, res) => {
   res.json({})
 })
 
