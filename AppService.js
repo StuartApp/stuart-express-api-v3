@@ -1,4 +1,4 @@
-const axios = require('axios')
+const axios = require('axios');
 
 class AppService {
   orderToJob(order) {
@@ -23,15 +23,25 @@ class AppService {
     };
   }
 
-  async createJobDelay({ job })  {
-    const { HTTP_DELAY_IN_SECONDS = 2 } = process.env
-    const { data } = await axios.get(`https://httpbin.org/delay/${HTTP_DELAY_IN_SECONDS}`);
+  async createJobDelay({ job }) {
+    const { HTTP_DELAY_IN_SECONDS = 2 } = process.env;
+    const { data } = await axios.get(
+      `https://httpbin.org/delay/${HTTP_DELAY_IN_SECONDS}`,
+    );
     return this.createJob({ job });
   }
 
-  async createJobRandomDelay({ job })  {
-    const { data } = await axios.get("https://dummy-api.beta.stuart-apps.solutions/api/foo/bar");
-    return this.createJob({ job });
+  async createJobRandomDelay({ job }) {
+    try {
+      const { data } = await axios.get(
+        'https://dummy-api.beta.stuart-apps.solutions/api/foo/bar',
+      );
+      return this.createJob({ job });
+    } catch (error) {
+      // We don't want to polute the performance test if the dummy service fails, so we just return the expected response.
+      console.error(error.message);
+      return this.createJob({ job });
+    }
   }
 
   async createJob({ job }) {
@@ -84,4 +94,4 @@ class AppService {
   }
 }
 
-module.exports = { AppService }
+module.exports = { AppService };
